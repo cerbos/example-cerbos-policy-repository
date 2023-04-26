@@ -1,0 +1,51 @@
+# yaml-language-server: $schema=https://api.cerbos.dev/latest/cerbos/policy/v1/Policy.schema.json
+---
+apiVersion: api.cerbos.dev/v1
+resourcePolicy:
+  version: "default"
+
+  # This resource file is reviewed for when checking permissions when a resource
+  # is of `kind` "basicResource"
+  resource: "basicResource"
+
+  rules:
+    # If the `principal`s role is `admin` then all the actions are allowed.
+    - actions: ["*"]
+      effect: EFFECT_ALLOW
+      roles:
+        - ADMIN
+
+    # Any user can create a resource
+    - actions: ["create"]
+      effect: EFFECT_ALLOW
+      roles:
+        - USER
+
+    # Any user can read a resource as long as it is published or owned by the user
+    - actions: ["read"]
+      effect: EFFECT_ALLOW
+      roles:
+        - USER
+      condition:
+        match:
+          any:
+            of:
+              - expr: request.resource.attr.isPublished == true
+              - expr: request.resource.attr.ownerId == request.principal.id
+
+    # Only the owner of the resource can update or delete it
+    - actions: ["update", "delete"]
+      effect: EFFECT_ALLOW
+      roles:
+        - USER
+      condition:
+        match:
+          expr: request.resource.attr.ownerId == request.principal.id
+
+  schemas:
+    principalSchema:
+      ref: cerbos:///principal.json
+    resourceSchema:
+      ref: cerbos:///basicResource.json
+      ignoreWhen:
+        actions: ["create"]

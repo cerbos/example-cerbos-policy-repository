@@ -1,0 +1,165 @@
+# yaml-language-server: $schema=https://api.cerbos.dev/latest/cerbos/policy/v1/TestSuite.schema.json
+
+name: Basic Resource test suite
+description: Tests for verifying the basicResource policy
+
+principals:
+  sally:
+    id: sally
+    roles:
+      - USER
+  ian:
+    id: ian
+    roles:
+      - ADMIN
+  frank:
+    id: frank
+    roles:
+      - USER
+
+resources:
+  resource1:
+    id: resource1
+    kind: "basicResource"
+    attr:
+      ownerId: sally
+      isPublished: true
+  resource2:
+    id: resource2
+    kind: basicResource
+    attr:
+      ownerId: sally
+      isPublished: true
+  resource3:
+    id: resource3
+    kind: basicResource
+    attr:
+      ownerId: sally
+      isPublished: false
+  newResource:
+    id: newResource
+    kind: basicResource
+    attr:
+      ownerId: sally
+      isPublished: false
+
+tests:
+  - name: Admin Role
+    input:
+      principals:
+        - ian
+      resources:
+        - resource1
+        - resource2
+        - resource3
+      actions:
+        - read
+        - update
+        - delete
+
+    expected:
+      - principal: ian
+        resource: resource1
+        actions:
+          read: EFFECT_ALLOW
+          update: EFFECT_ALLOW
+          delete: EFFECT_ALLOW
+      - principal: ian
+        resource: resource2
+        actions:
+          read: EFFECT_ALLOW
+          update: EFFECT_ALLOW
+          delete: EFFECT_ALLOW
+      - principal: ian
+        resource: resource3
+        actions:
+          read: EFFECT_ALLOW
+          update: EFFECT_ALLOW
+          delete: EFFECT_ALLOW
+
+  - name: Admin Role - Create
+    input:
+      principals:
+        - ian
+      resources:
+        - newResource
+      actions:
+        - create
+
+    expected:
+      - principal: ian
+        resource: newResource
+        actions:
+          create: EFFECT_ALLOW
+
+  - name: User Role
+    input:
+      principals:
+        - sally
+        - frank
+      resources:
+        - resource1
+        - resource2
+        - resource3
+      actions:
+        - read
+        - update
+        - delete
+
+    expected:
+      - principal: sally
+        resource: resource1
+        actions:
+          read: EFFECT_ALLOW
+          update: EFFECT_ALLOW
+          delete: EFFECT_ALLOW
+      - principal: sally
+        resource: resource2
+        actions:
+          read: EFFECT_ALLOW
+          update: EFFECT_ALLOW
+          delete: EFFECT_ALLOW
+      - principal: sally
+        resource: resource3
+        actions:
+          read: EFFECT_ALLOW
+          update: EFFECT_ALLOW
+          delete: EFFECT_ALLOW
+      - principal: frank
+        resource: resource1
+        actions:
+          read: EFFECT_ALLOW
+          update: EFFECT_DENY
+          delete: EFFECT_DENY
+      - principal: frank
+        resource: resource2
+        actions:
+          read: EFFECT_ALLOW
+          update: EFFECT_DENY
+          delete: EFFECT_DENY
+      - principal: frank
+        resource: resource3
+        actions:
+          read: EFFECT_DENY
+          update: EFFECT_DENY
+          delete: EFFECT_DENY
+
+  - name: User Role - Create
+    input:
+      principals:
+        - sally
+        - frank
+      resources:
+        - newResource
+      actions:
+        - create
+
+    expected:
+      - principal: sally
+        resource: newResource
+        actions:
+          create: EFFECT_ALLOW
+      - principal: frank
+        resource: newResource
+        actions:
+          create: EFFECT_ALLOW
