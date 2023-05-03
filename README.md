@@ -1,57 +1,62 @@
-# Basic CRUD Policies
+# Getting started with basic CRUD policies
 
-## Policies
+## What's in this repository?
 
+### Policies
 
-A basic resource, called `basicResource` has been defined with `create`, `read`, `update` and `delete` actions. This policy expects a principal to have either the `ADMIN` or `USER` role.
+[Resource policies](https://docs.cerbos.dev/cerbos/latest/policies/resource_policies.html) define rules for actions that can be performed on a given resource.
 
+[policies/basicResource.yaml](./policies/basicResource.yaml) defines a resource policy for `basicResource`s, with `create`, `read`, `update` and `delete` actions. This policy expects a principal to have either the `ADMIN` or `USER` role.
 
-A `basicResource` is expected to have two attributes, `ownerId` and `isPublished` which are used in the policy to make decisions with.
+A `basicResource` is expected to have two attributes, `ownerId` and `isPublished`, which are used in the policy to make decisions about which actions should be permitted.
 
+### Attribute schemas
 
-### Attribute Schema
-Optional [attribute schema](https://docs.cerbos.dev/cerbos/latest/policies/schemas.html) has been defined for both the principal and the `basicResource` policy. These are JSONSchema definitions that are used by the Cerbos PDP at request time to validate the incoming request having all the required data to make a correct authorization decision from. The server configuration can be set to either give a warning or reject the request fully if the input doesn't conform to these schemas.
+[Attribute schemas](https://docs.cerbos.dev/cerbos/latest/policies/schemas.html) are optional JSON schemas that are used by the Cerbos PDP at request time to validate the incoming request having all the required data to make a correct authorization decision.
+The server configuration can be set to either give a warning or reject the request if the input doesn't conform to these schemas.
 
-
-## Tests
-
-The `/tests` directory contains a [single test suite](https://docs.cerbos.dev/cerbos/latest/policies/compile.html#testing) and related test data in order to check that the permissions are implemented as expected.
-
-
-## Cerbos Cloud
-This repo contains the `.cerbos-cloud.yaml` file in the root which is used by [Cerbos Cloud](https://cerbos.dev/cloud) to determine which commits to bundle and deploy to any connected Cerbos PDP instances:
+[policies/_schemas/principal.json](./policies/_schemas/principal.json) defines a schema for the principals, while [policies/_schemas/basicResource.json](./policies/_schemas/basicResource.json) defines a schema for the `basicResource`s.
 
 
-```yaml
----
-apiVersion: cloudapi.cerbos.dev/v1
-labels: # List of bundle labels to be built when the git reference matches
- latest:
-   branch: main
+### Tests
+
+[policies/basicResource_test.yaml](./policies/basicResource_test.yaml) defines a [test suite](https://docs.cerbos.dev/cerbos/latest/policies/compile.html#testing) and related test data that checks that the permissions are implemented as expected.
+
+### Cerbos Policy Decision Point (PDP) configuration
+
+[cerbos.yaml](./cerbos.yaml) is used to configure a Cerbos PDP server container to load the policies from disk.
+
+### Cerbos Cloud configuration
+
+[.cerbos-cloud.yaml](./.cerbos-cloud.yaml) is used to configure a [Cerbos Cloud](https://cerbos.dev/cloud) workspace to compile policy bundles from commits matching the configured labels, to be deployed to connected Cerbos PDP instances.
+
+## Running locally
+
+The simplest way to run Cerbos is using the [container](https://docs.cerbos.dev/cerbos/latest/installation/container.html), which is shown below.
+[See the documentation for other ways to install and run Cerbos locally](https://docs.cerbos.dev/cerbos/latest/installation/binary.html).
+
+### Compile and test
+
+Verify that the policies are correct by running
+
+```
+docker run --rm -it \
+  -v $(pwd):/basic-crud \
+  ghcr.io/cerbos/cerbos:latest \
+  compile --verbose /basic-crud/policies
 ```
 
+### PDP server
 
-## Running Locally
+Launch a PDP server by running
 
-
-The simplest way to run Cerbos is using the [container](https://docs.cerbos.dev/cerbos/latest/installation/container.html) which is shown below. Other options include running the binary avaliable [on the documentation site](https://docs.cerbos.dev/cerbos/latest/installation/binary.html).
-
-
-### Compile & Test
-```
-docker run -i -t \
- -v $(pwd):/basic-crud \
- ghcr.io/cerbos/cerbos:latest compile --tests=/basic-crud/tests /basic-crud/policies
-```
-
-
-### Server
 ```
 docker run --rm --name cerbos \
  -v $(pwd):/basic-crud \
  -p 3592:3592 \
  -p 3593:3593 \
- ghcr.io/cerbos/cerbos:latest server --config=/basic-crud/config.yaml
+ ghcr.io/cerbos/cerbos:latest \
+ server --config=/basic-crud/cerbos.yaml
 ```
-This will start a PDP locally configured via the `/config.yaml` file. The API documentation can be found at [`http://localhost:3592`
-](http://localhost:3592)
+
+The API documentation can then be found at [http://localhost:3592](http://localhost:3592).
