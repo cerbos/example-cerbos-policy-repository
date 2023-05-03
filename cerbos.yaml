@@ -1,8 +1,5 @@
-server:
-  httpListenAddr: ":3592"
-
 storage:
-  driver: "disk"
+  driver: disk
   disk:
     directory: /basic-crud/policies
     watchForChanges: true

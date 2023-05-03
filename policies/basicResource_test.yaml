@@ -20,7 +20,7 @@ principals:
 resources:
   resource1:
     id: resource1
-    kind: "basicResource"
+    kind: basicResource
     attr:
       ownerId: sally
       isPublished: true
