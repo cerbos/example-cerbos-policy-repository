@@ -15,8 +15,7 @@ A `basicResource` is expected to have two attributes, `ownerId` and `isPublished
 [Attribute schemas](https://docs.cerbos.dev/cerbos/latest/schemas.html) are optional JSON schemas that are used by the Cerbos PDP at request time to validate the incoming request having all the required data to make a correct authorization decision.
 The server configuration can be set to either give a warning or reject the request if the input doesn't conform to these schemas.
 
-[_schemas/principal.json](./_schemas/principal.json) defines a schema for the principals, while [_schemas/basicResource.json](./_schemas/basicResource.json) defines a schema for the `basicResource`s.
-
+[\_schemas/principal.json](./_schemas/principal.json) defines a schema for the principals, while [\_schemas/basicResource.json](./_schemas/basicResource.json) defines a schema for the `basicResource`s.
 
 ### Tests
 
@@ -26,9 +25,9 @@ The server configuration can be set to either give a warning or reject the reque
 
 [.cerbos.yaml](./.cerbos.yaml) is used to configure a Cerbos PDP server container to load the policies from disk.
 
-### Cerbos Cloud configuration
+### Cerbos Hub configuration
 
-[.cerbos-cloud.yaml](./.cerbos-cloud.yaml) is used to configure a [Cerbos Cloud](https://cerbos.dev/cloud) workspace to compile policy bundles from commits matching the configured labels, to be deployed to connected Cerbos PDP instances.
+[.cerbos-hub.yaml](./.cerbos-hub.yaml) is used to configure a [Cerbos Hub](https://cerbos.dev/next) workspace to compile policy bundles from commits matching the configured labels, to be deployed to connected Cerbos PDP instances.
 
 ## Running locally
 
