@@ -1,0 +1,10 @@
+apiVersion: api.cerbos.dev/v1
+resourcePolicy:
+  version: 'default'
+  resource: 'payruns'
+  rules:
+    - actions: ['*']
+      effect: EFFECT_ALLOW
+      roles:
+        - ORG_ADMIN
+        - ADVISOR
