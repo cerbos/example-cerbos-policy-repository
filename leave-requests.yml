@@ -1,0 +1,10 @@
+apiVersion: api.cerbos.dev/v1
+resourcePolicy:
+  version: 'default'
+  resource: 'leave-requests'
+  rules:
+    - actions: ['*']
+      effect: EFFECT_ALLOW
+      roles:
+        - ORG_ADMIN
+        - MANAGER
