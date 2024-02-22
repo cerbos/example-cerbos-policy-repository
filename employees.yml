@@ -1,0 +1,14 @@
+apiVersion: api.cerbos.dev/v1
+resourcePolicy:
+  version: 'default'
+  resource: 'employees'
+  rules:
+    - actions: ['*']
+      effect: EFFECT_ALLOW
+      roles:
+        - ORG_ADMIN
+    - actions:
+        ['view', 'view-profile', 'view-leaves', 'add-leaves', 'save-leaves']
+      effect: EFFECT_ALLOW
+      roles:
+        - MANAGER
