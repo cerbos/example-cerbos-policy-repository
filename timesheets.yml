@@ -8,3 +8,8 @@ resourcePolicy:
       roles:
         - ORG_ADMIN
         - MANAGER
+
+    - actions: ['create', 'view', 'update', 'view-my-timesheets']
+      effect: EFFECT_ALLOW
+      roles:
+        - EMPLOYEE
