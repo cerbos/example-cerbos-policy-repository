@@ -1,0 +1,9 @@
+apiVersion: api.cerbos.dev/v1
+resourcePolicy:
+  version: 'default'
+  resource: 'profile'
+  rules:
+    - actions: ['*']
+      effect: EFFECT_ALLOW
+      roles:
+        - EMPLOYEE
