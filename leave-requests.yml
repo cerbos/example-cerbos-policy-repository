@@ -8,7 +8,7 @@ resourcePolicy:
       roles:
         - ORG_ADMIN
         - MANAGER
-    - actions: ['create', 'view', 'update', 'view-my-leaves']
+    - actions: ['create', 'view', 'update', 'My Leaves']
       effect: EFFECT_ALLOW
       roles:
         - EMPLOYEE
