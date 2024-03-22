@@ -9,7 +9,12 @@ resourcePolicy:
         - ORG_ADMIN
         - MANAGER
 
-    - actions: ['create', 'view', 'update', 'My Timesheets']
+    - actions: ['create', 'view', 'update', 'My Timesheets', 'submit']
       effect: EFFECT_ALLOW
       roles:
         - EMPLOYEE
+
+    - actions: ['submit']
+      effect: EFFECT_DENY
+      roles:
+        - ORG_ADMIN
