@@ -8,7 +8,7 @@ resourcePolicy:
       roles:
         - ORG_ADMIN
 
-    - actions: ['view']
+    - actions: ['*']
       effect: EFFECT_ALLOW
       roles:
         - EMPLOYEE
