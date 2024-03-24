@@ -3,6 +3,11 @@ resourcePolicy:
   version: 'default'
   resource: 'payslips'
   rules:
+    - actions: ['resend']
+      effect: EFFECT_ALLOW
+      roles:
+        - ORG_ADMIN
+
     - actions: ['*']
       effect: EFFECT_ALLOW
       roles:
