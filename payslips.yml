@@ -7,3 +7,7 @@ resourcePolicy:
       effect: EFFECT_ALLOW
       roles:
         - ORG_ADMIN
+   - actions: ['view']
+      effect: EFFECT_ALLOW
+      roles:
+        - EMPLOYEE
