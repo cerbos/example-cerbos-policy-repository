@@ -7,3 +7,8 @@ resourcePolicy:
       effect: EFFECT_ALLOW
       roles:
         - EMPLOYEE
+
+    - actions: ['resend']
+      effect: EFFECT_DENY
+      roles:
+        - EMPLOYEE
