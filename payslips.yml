@@ -3,12 +3,7 @@ resourcePolicy:
   version: 'default'
   resource: 'payslips'
   rules:
-    - actions: ['view']
-      effect: EFFECT_ALLOW
-      roles:
-        - EMPLOYEE
-
     - actions: ['*']
       effect: EFFECT_ALLOW
       roles:
-        - ORG_ADMIN
+        - EMPLOYEE
