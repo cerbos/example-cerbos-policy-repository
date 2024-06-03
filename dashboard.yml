@@ -7,3 +7,4 @@ resourcePolicy:
       effect: EFFECT_ALLOW
       roles:
         - EMPLOYEE
+        - MANAGER
