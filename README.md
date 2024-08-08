@@ -6,7 +6,7 @@
 
 [Resource policies](https://docs.cerbos.dev/cerbos/latest/resource_policies.html) define rules for actions that can be performed on a given resource.
 
-[`basicResource.yaml`](./basicResource.yaml) defines a resource policy, made up of `basicResource` objects, with _create_, _read_, _update_ and _delete_ actions. This policy expects a principal to have either the `ADMIN` or `USER` role.
+[`basicResource.yaml`](./basicResource.yaml) defines a resource policy for the kind `basicResource`, with _create_, _read_, _update_ and _delete_ actions. This policy expects a principal to have either the `ADMIN` or `USER` role.
 
 A `basicResource` is expected to have two attributes, `ownerId` and `isPublished`, which are used in the policy to make decisions about which actions should be permitted.
 
